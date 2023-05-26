@@ -51,6 +51,10 @@ export const icons: Record<string, string> = {
   expandArrowDown: pathToSvg(mdiIcons.mdiChevronDown),
   expandArrowUp: pathToSvg(mdiIcons.mdiChevronUp),
   highlight: pathToSvg(mdiIcons.mdiMarker),
+  sub: pathToSvg(mdiIcons.mdiSubscript),
+  sup: pathToSvg(mdiIcons.mdiSuperscript),
+  cite: pathToSvg(mdiIcons.mdiBookReference),
+  abbr: pathToSvg(mdiIcons.mdiAbbreviation),
 };
 
 export const addIcons = (): void => {
