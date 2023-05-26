@@ -128,6 +128,49 @@ export const htmlFormatterSettings = {
     selectionInput: 3,
     objectType: 'htmlFormatterSetting',
   },
+  li: {
+    des: '<li>',
+    symbol: '<li></li>',
+    shift: 4,
+    selectionInput: 4,
+    objectType: 'htmlFormatterSetting',
+  },
+  iframe: {
+    des: '<iframe>',
+    symbol: '<iframe></iframe>',
+    shift: 8,
+    selectionInput: 8,
+    objectType: 'htmlFormatterSetting',
+  },
+  sup: {
+    des: '<sup>',
+    symbol: '<sup></sup>',
+    shift: 5,
+    selectionInput: 5,
+    objectType: 'htmlFormatterSetting',
+  },
+  sub: {
+    des: '<sub>',
+    symbol: '<sub></sub>',
+    shift: 5,
+    selectionInput: 5,
+    objectType: 'htmlFormatterSetting',
+  },
+  abbr: {
+   des: '<abbr>',
+   symbol: '<abbr title=""></abbr>',
+   shift: 6,
+   selectionInput: 19,
+   objectType: 'htmlFormatterSetting',
+},
+cite: {
+  des: '<cite>',
+  symbol: '<cite></cite>',
+  shift: 6,
+  selectionInput: 6,
+  objectType: 'htmlFormatterSetting',
+},
+
 };
 
 export function htmlFormatter(editor: Editor, item: htmlFormatterSetting) {
