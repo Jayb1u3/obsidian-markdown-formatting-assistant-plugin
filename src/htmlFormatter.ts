@@ -128,6 +128,146 @@ export const htmlFormatterSettings = {
     selectionInput: 3,
     objectType: 'htmlFormatterSetting',
   },
+  iframe: {
+    des: "<iframe>",
+    symbol: `<%*
+      const Url = await tp.system.prompt("Enter URL");
+      const html = \`<iframe src="\${Url}" width="800" height="600" style="border:none;"></iframe>\`;
+      tR += html;
+    %>`,
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  sup: {
+    des: "<sup>",
+    symbol: "<sup></sup>",
+    shift: 5,
+    selectionInput: 5,
+    objectType: "htmlFormatterSetting",
+  },
+  sub: {
+    des: "<sub>",
+    symbol: "<sub></sub>",
+    shift: 5,
+    selectionInput: 5,
+    objectType: "htmlFormatterSetting",
+  },
+  FMTitle: {
+    des: "Frontmatter Title",
+    symbol: "<% tp.frontmatter['title'] %>",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  fileTitle: {
+    des: "File Title",
+    symbol: "<% tp.file.title %>",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  promptInput: {
+    des: "Prompt for Input",
+    symbol: 'const input = await tp.system.prompt("Enter your input");',
+    objectType: "htmlFormatterSetting",
+  },
+  des: "Async Function",
+    symbol: 'async function functionName() {\\n}',
+    shift: 31,  // Adjusts cursor inside the function body
+    selectionInput: 30,  // Positions cursor at the start of the function body
+    objectType: "htmlFormatterSetting",
+  },  
+  appendText: {
+    des: "Append Text",
+    symbol: "tR += ",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  templaterJSTags: {
+    des: "<%* %>",
+    symbol: "<%* %> ",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  templaterTags: {
+    des: "<% %>",
+    symbol: "<% %>",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  sp: {
+    des: "<system.prompt>",
+    symbol: '<% tp.system.prompt("") %>',
+    shift: 21,
+    selectionInput: 21,
+    objectType: "htmlFormatterSetting",
+  },
+  suggesterFunction: {
+    des: "Suggester Function",
+    symbol: `const choice = await tp.system.suggester(["Option1", "Option2"], ["Option1", "Option2"]);`,
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  suggesterFunction: {
+    des: "Suggest Array",
+    symbol: `const suggestions = ["1", "2", "3"]; 
+    const suggestions = await tp.system.suggester(suggestions, suggestions, { 
+        placeholder: "Select a view type" });
+        
+        //Check if  the user made a selection and respond accordingly
+        if (suggestions) {
+          tR += suggestions; //append the selected  option to the document
+        } else {
+          console.log("No option was selected."); //Log  to console if no selection was made
+        }`,
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  templateLiteral: {
+    des: "${}",
+    symbol: "${}",
+    objectType: "htmlFormatterSetting",
+  },
+  taskStatus: {
+    des: "Task Status",
+    symbol:
+      '<% tp.system.suggester(["Complete", "Incomplete"], ["Complete", "Incomplete"]) %>',
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  date: {
+    des: "Current Date",
+    symbol: '<% tp.date.now("YYYY-MM-DD") %>',
+    shift: 0, // Adjust these values based on your usage
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  dateTime: {
+    des: "Current Date and Time",
+    symbol: '<% tp.date.now("YYYY-MM-DD HH:mm") %>',
+    shift: 0, // Adjust accordingly
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  renameFile: {
+    des: "Rename File",
+    symbol: 'await tp.file.rename("New File Name");',
+    shift: 0, // Adjust accordingly
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+  arrayDeclaration: {
+    des: "Array Declaration",
+    symbol: "const myArray = [element1, element2, element3];",
+    objectType: "htmlFormatterSetting",
+  },
 };
 
 export function htmlFormatter(editor: Editor, item: htmlFormatterSetting) {
