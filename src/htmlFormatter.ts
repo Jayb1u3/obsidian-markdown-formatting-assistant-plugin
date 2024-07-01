@@ -1,13 +1,28 @@
+
+/* ───────────────────────────────────────────────── */
+/* << HTML Formatter Settings >> */
+/* ───────────────────────────────────────────────── */
+
+/* ─────────── Base Formatter Settings ─────────── */
 import { Editor } from 'obsidian';
 import { baseFormatterSetting } from './formatter';
 
+/* 
+  Interface for HTML Formatter Settings
+  Extends the base formatter settings with additional properties specific to HTML formatting.
+*/
 export interface htmlFormatterSetting extends baseFormatterSetting {
   symbol: string;
   shift: number;
   selectionInput: number;
 }
 
+/* 
+  HTML Formatter Settings
+  Defines various settings for HTML formatting, including async functions, text appending, and templater tags.
+*/
 export const htmlFormatterSettings = {
+  /* ─────────── Async Function ─────────── */
   asyncFunction: {
     des: "Async Function",
     symbol: 'async function functionName() {\\n}',
@@ -15,6 +30,8 @@ export const htmlFormatterSettings = {
     selectionInput: 30,  // Positions cursor at the start of the function body
     objectType: "htmlFormatterSetting",
   },  
+
+  /* ─────────── Append Text ─────────── */
   appendText: {
     des: "Append Text",
     symbol: "tR += ",
@@ -22,6 +39,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Templater JS Tags ─────────── */
   templaterJSTags: {
     des: "<%* %>",
     symbol: "<%* %> ",
@@ -29,6 +48,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Templater Tags ─────────── */
   templaterTags: {
     des: "<% %>",
     symbol: "<% %>",
@@ -36,6 +57,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── System Prompt ─────────── */
   sp: {
     des: "<system.prompt>",
     symbol: '<% tp.system.prompt("") %>',
@@ -43,6 +66,8 @@ export const htmlFormatterSettings = {
     selectionInput: 21,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Suggester Function ─────────── */
   suggesterFunction: {
     des: "Suggester Function",
     symbol: `const choice = await tp.system.suggester(["Option1", "Option2"], ["Option1", "Option2"]);`,
@@ -50,35 +75,42 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
-  suggesterFunction: {
+
+  /* ─────────── Suggest Array ─────────── */
+  suggestArray: {
     des: "Suggest Array",
     symbol: `const suggestions = ["1", "2", "3"]; 
     const suggestions = await tp.system.suggester(suggestions, suggestions, { 
         placeholder: "Select a view type" });
         
-        //Check if  the user made a selection and respond accordingly
-        if (suggestions) {
-          tR += suggestions; //append the selected  option to the document
-        } else {
-          console.log("No option was selected."); //Log  to console if no selection was made
-        }`,
+    // Check if the user made a selection and respond accordingly
+    if (suggestions) {
+      tR += suggestions; // Append the selected option to the document
+    } else {
+      console.log("No option was selected."); // Log to console if no selection was made
+    }`,
     shift: 0,
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Template Literal ─────────── */
   templateLiteral: {
     des: "${}",
     symbol: "${}",
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Task Status ─────────── */
   taskStatus: {
     des: "Task Status",
-    symbol:
-      '<% tp.system.suggester(["Complete", "Incomplete"], ["Complete", "Incomplete"]) %>',
+    symbol: '<% tp.system.suggester(["Complete", "Incomplete"], ["Complete", "Incomplete"]) %>',
     shift: 0,
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Current Date ─────────── */
   date: {
     des: "Current Date",
     symbol: '<% tp.date.now("YYYY-MM-DD") %>',
@@ -86,6 +118,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Current Date and Time ─────────── */
   dateTime: {
     des: "Current Date and Time",
     symbol: '<% tp.date.now("YYYY-MM-DD HH:mm") %>',
@@ -93,6 +127,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Rename File ─────────── */
   renameFile: {
     des: "Rename File",
     symbol: 'await tp.file.rename("New File Name");',
@@ -100,11 +136,15 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Array Declaration ─────────── */
   arrayDeclaration: {
     des: "Array Declaration",
     symbol: "const myArray = [element1, element2, element3];",
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Move File with Prompt ─────────── */
   moveFile: {
     des: "Move File with Prompt",
     symbol: `async function moveFileWithPrompt() {
@@ -124,6 +164,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0, // Adjust these values based on your usage
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Frontmatter Title ─────────── */
   FMTitle: {
     des: "Frontmatter Title",
     symbol: "<% tp.frontmatter['title'] %>",
@@ -131,6 +173,8 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── File Title ─────────── */
   fileTitle: {
     des: "File Title",
     symbol: "<% tp.file.title %>",
@@ -138,16 +182,22 @@ export const htmlFormatterSettings = {
     selectionInput: 0,
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Prompt for Input ─────────── */
   promptInput: {
     des: "Prompt for Input",
     symbol: 'const input = await tp.system.prompt("Enter your input");',
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── New Line ─────────── */
   newLine: {
     des: "New Line",
     symbol: "\\n",
     objectType: "htmlFormatterSetting",
   },
+
+  /* ─────────── Line Break ─────────── */
   br: {
     des: '<br/>',
     symbol: '<br/>',
@@ -155,6 +205,8 @@ export const htmlFormatterSettings = {
     selectionInput: 5,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Div Element ─────────── */
   div: {
     des: '<div>',
     symbol: '<div></div>',
@@ -162,6 +214,8 @@ export const htmlFormatterSettings = {
     selectionInput: 5,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Span Element ─────────── */
   span: {
     des: '<span>',
     symbol: '<span></span>',
@@ -169,6 +223,8 @@ export const htmlFormatterSettings = {
     selectionInput: 6,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Image Element ─────────── */
   img: {
     des: '<img>',
     symbol: '<img src="" alt="" width="" height=""></img>',
@@ -176,6 +232,8 @@ export const htmlFormatterSettings = {
     selectionInput: 38,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Anchor Element ─────────── */
   a: {
     des: '<a>',
     symbol: '<a></a>',
@@ -183,6 +241,8 @@ export const htmlFormatterSettings = {
     selectionInput: 3,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Paragraph Element ─────────── */
   p: {
     des: '<p>',
     symbol: '<p></p>',
@@ -190,6 +250,8 @@ export const htmlFormatterSettings = {
     selectionInput: 3,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Font Style ─────────── */
   font: {
     des: '<font>',
     symbol:
@@ -198,6 +260,8 @@ export const htmlFormatterSettings = {
     selectionInput: 64,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Element ─────────── */
   table: {
     des: '<table>',
     symbol: '<table></table>',
@@ -205,6 +269,8 @@ export const htmlFormatterSettings = {
     selectionInput: 7,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Header ─────────── */
   thead: {
     des: '<thead>',
     symbol: '<thead></thead>',
@@ -212,6 +278,10 @@ export const htmlFormatterSettings = {
     selectionInput: 7,
     objectType: 'htmlFormatterSetting',
   },
+
+  /*
+
+ ─────────── Table Body ─────────── */
   tbody: {
     des: '<tbody>',
     symbol: '<tbody></tbody>',
@@ -219,6 +289,8 @@ export const htmlFormatterSettings = {
     selectionInput: 7,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Footer ─────────── */
   tfoot: {
     des: '<tfoot>',
     symbol: '<tfoot></tfoot>',
@@ -226,6 +298,8 @@ export const htmlFormatterSettings = {
     selectionInput: 7,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Row ─────────── */
   tr: {
     des: '<tr>',
     symbol: '<tr></tr>',
@@ -233,6 +307,8 @@ export const htmlFormatterSettings = {
     selectionInput: 4,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Data Cell ─────────── */
   td: {
     des: '<td>',
     symbol: '<td></td>',
@@ -240,6 +316,8 @@ export const htmlFormatterSettings = {
     selectionInput: 4,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Table Header Cell ─────────── */
   th: {
     des: '<th>',
     symbol: '<th></th>',
@@ -247,6 +325,8 @@ export const htmlFormatterSettings = {
     selectionInput: 4,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Details Element ─────────── */
   details: {
     des: '<details>',
     symbol: '<details></details>',
@@ -254,6 +334,8 @@ export const htmlFormatterSettings = {
     selectionInput: 9,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Summary Element ─────────── */
   summary: {
     des: '<summary>',
     symbol: '<summary></summary>',
@@ -261,6 +343,8 @@ export const htmlFormatterSettings = {
     selectionInput: 9,
     objectType: 'htmlFormatterSetting',
   },
+
+  /* ─────────── Underline Element ─────────── */
   u: {
     des: '<u>',
     symbol: '<u></u>',
@@ -268,17 +352,11 @@ export const htmlFormatterSettings = {
     selectionInput: 3,
     objectType: 'htmlFormatterSetting',
   },
-  font: {
-    des: "<font>",
-    symbol:
-      '<span style="font-family:inherit; font-size:inherit; font-weight:inherit; font-style:inherit; text-decoration:inherit; color:inherit; text-shadow: 0px 0px 0px rgba(0,0,0,0.5);"></span>',
-    shift: 177,
-    selectionInput: 177,
-    objectType: "htmlFormatterSetting",
-  },
+
+  /* ─────────── Font Style Customization ─────────── */
   fontStyleCustomization: {
     des: "<font Enh>",
-      symbol: `<%*
+    symbol: `<%*
     async function customizeFontStyle() {
         try {
             const innerText = await tp.system.prompt("Enter the text to style:");
@@ -330,99 +408,120 @@ export const htmlFormatterSettings = {
     }
     await customizeFontStyle();
     %>`,
-      shift: 0,
-      selectionInput: 0,
-      objectType: "htmlFormatterSetting",
-    },
-    sup: {
-      des: "<sup>",
-      symbol: "<sup></sup>",
-      shift: 5,
-      selectionInput: 5,
-      objectType: "htmlFormatterSetting",
-    },
-    sub: {
-      des: "<sub>",
-      symbol: "<sub></sub>",
-      shift: 5,
-      selectionInput: 5,
-      objectType: "htmlFormatterSetting",
-    },
-    dynamicTable: {
-      des: "Create Dynamic Table",
-      symbol: `<%*
-        async function createDynamicTable() {
-          const numColumns = parseInt(await tp.system.prompt("Number of columns"), 10);
-          const numRows = parseInt(await tp.system.prompt("Number of rows"), 10);
-          
-          let headers = "|";
-          let separator = "|";
-          for (let columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-            const header = await tp.system.prompt(\`Header for column \${columnIndex + 1}\`);
-            headers += \` \${header} |\`;
-            separator += " -------- |";
-          }
-          
-          let tableRows = "";
-          for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
-            let row = "|";
-            for (let columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-              const cell = await tp.system.prompt(\`Row \${rowIndex + 1}, Column \${columnIndex + 1}\`);
-              row += \` \${cell} |\`;
-            }
-            tableRows += row + "\\n";
-          }
-          
-          return headers + "\\n" + separator + "\\n" + tableRows;
-        }
-        
-        const tableMarkdown = await createDynamicTable();
-        tR += tableMarkdown;
-      %>`,
-      shift: 0,
-      selectionInput: 0,
-      objectType: "htmlFormatterSetting",
-    },
-    div: {
-      des: "<div>",
-      symbol: "<div></div>",
-      shift: 5,
-      selectionInput: 5,
-      objectType: "htmlFormatterSetting",
-    },
-    span: {
-      des: "<span>",
-      symbol: "<span></span>",
-      shift: 6,
-      selectionInput: 6,
-      objectType: "htmlFormatterSetting",
-    },
-    img: {
-      des: "<img>",
-      symbol: '<img src="" alt="" width="" height=""></img>',
-      shift: 10,
-      selectionInput: 38,
-      objectType: "htmlFormatterSetting",
-    },
-    iframe: {
-      des: "<iframe>",
-      symbol: `<%*
-        const Url = await tp.system.prompt("Enter URL");
-        const html = \`<iframe src="\${Url}" width="800" height="600" style="border:none;"></iframe>\`;
-        tR += html;
-      %>`,
-      shift: 0,
-      selectionInput: 0,
-      objectType: "htmlFormatterSetting",
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
   },
-    cite: {
-      des: "<cite>",
-      symbol: '<cite></cite>',
-      shift: 6,
-      selectionInput: 38,
-      objectType: "htmlFormatterSetting",
+
+  /* ─────────── Superscript Element ─────────── */
+  sup: {
+    des: "<sup>",
+    symbol: "<sup></sup>",
+    shift: 5,
+    selectionInput: 5,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Subscript Element ─────────── */
+  sub: {
+    des: "<sub>",
+    symbol: "<sub></sub>",
+    shift: 5,
+    selectionInput: 5,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Dynamic Table ─────────── */
+  dynamicTable: {
+    des: "Create Dynamic Table",
+    symbol: `<%*
+    async function createDynamicTable() {
+      const numColumns = parseInt(await tp.system.prompt("Number of columns"), 10);
+      const numRows = parseInt(await tp.system.prompt("Number of rows"), 10);
+      
+      let headers = "|";
+      let separator = "|";
+      for (let columnIndex = 0; columnIndex < numColumns; columnIndex++) {
+        const header = await tp.system.prompt(\`Header for column \${columnIndex + 1}\`);
+        headers += \` \${header} |\`;
+        separator += " -------- |";
+      }
+      
+      let tableRows = "";
+      for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+        let row = "|";
+        for (let columnIndex = 0; columnIndex < numColumns; columnIndex++) {
+          const cell = await tp.system.prompt(\`Row \${rowIndex + 1}, Column \${columnIndex + 1}\`);
+          row += \` \${cell} |\`;
+        }
+        tableRows += row + "\\n";
+      }
+      
+      return headers + "\\n" + separator + "\\n" + tableRows;
+    }
+    
+    const tableMarkdown = await createDynamicTable();
+    tR += tableMarkdown;
+    %>`,
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Div Element ─────────── */
+  div: {
+    des: "<div>",
+    symbol: "<div></div>",
+    shift: 5,
+    selectionInput: 5,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Span Element ─────────── */
+  span: {
+    des: "<span>",
+    symbol: "<span></span>",
+    shift: 6,
+    selectionInput: 6,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Image Element ─────────── */
+  img: {
+    des: "<img>",
+    symbol: '<img src="" alt="" width="" height=""></img>',
+    shift: 10,
+    selectionInput: 38,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Iframe Element ─────────── */
+  iframe: {
+    des: "<iframe>",
+    symbol: `<%*
+    const Url = await tp.system.prompt("Enter URL");
+    const html = \`<iframe src="\${Url}" width="800" height="600" style="border:none;"></iframe>\`;
+    tR += html;
+    %>`,
+    shift: 0,
+    selectionInput: 0,
+    objectType: "htmlFormatterSetting",
+  },
+
+  /* ─────────── Cite Element ─────────── */
+  cite: {
+    des: "<cite>",
+    symbol: '<cite></cite>',
+    shift: 6,
+    selectionInput: 38,
+    objectType: "htmlFormatterSetting",
+  },
 };
 
+/* 
+  HTML Formatter Function
+  Handles the formatting of HTML code within the editor based on the selected formatting item.
+*/
 export function htmlFormatter(editor, item) {
   if (editor) {
     var isSelection = editor.somethingSelected();
