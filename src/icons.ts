@@ -1,127 +1,79 @@
-import { setIcon } from "obsidian";
+import * as R from 'ramda';
+import { addIcon } from 'obsidian';
+import * as mdiIcons from '@mdi/js';
+import * as iconPaths from './iconPaths';
 
-/**
- * Standard icon size used throughout the MFA plugin.
- * Keeping this centralized guarantees visual consistency.
- */
-
-export const DEFAULT_ICON_SIZE = 20;
-
-/**
- * Strongly-typed icon name registry for the plugin.
- *
- * All icon usages across the plugin should reference MFA_ICONS
- * instead of raw string literals, ensuring correctness and easy refactoring.
- */
-
-export const MFA_ICONS = {
-// Formatting
-	bold: "bold",
-	italic: "italic",
-	underline: "underline",
-	strikethrough: "strikethrough",
-	inlineCode: "code",
-	codeBlock: "file-code",
-	highlight: "highlighter",
-
-	// Structure
-	heading1: "heading-1",
-	heading2: "heading-2",
-	heading3: "heading-3",
-	heading4: "heading-4",
-	heading5: "heading-5",
-	heading6: "heading-6",
-
-	// Lists
-	bulletList: "list",
-	numberList: "list-ordered",
-	checkList: "check-square",
-
-	// Markdown / content insertion
-	quote: "quote",
-	hr: "minus",
-	link: "link",
-	image: "image",
-	file: "file",
-	mermaid: "area-chart",
-
-	// UI controls
-	menu: "menu",
-	expandDown: "chevron-down",
-	expandUp: "chevron-up",
-	view: "eye",
-} as const;
-
-/** 
- * Type automatically derived from MFA_ICONS keys.
- */
-export type MFAIconName = keyof typeof MFA_ICONS;
-
-/**
- * Safely applies a Lucide icon to an existing HTML element.
- *
- * Includes:
- * - Runtime safety checks
- * - Clear error logging
- * - Consistent icon sizing
- * - Graceful fallback behavior
- */
-export function applyIcon(
-	el: HTMLElement,
-	icon: MFAIconName,
-	size: number = DEFAULT_ICON_SIZE
-): void {
-	if (!el) {
-		console.warn("applyIcon() called with null element.");
-		return;
-	}
-
-	const iconName = MFA_ICONS[icon];
-	if (!iconName) {
-		console.warn(`Unknown icon key '${icon}' used in applyIcon().`);
-		return;
-	}
-
-	try {
-		setIcon(el, iconName);
-		el.style.width = `${size}px`;
-		el.style.height = `${size}px`;
-	} catch (err) {
-		console.error(`Failed to set icon '${iconName}'.`, err);
-	}
+function pathToSvg(icon: string) {
+  return `
+    <svg style="width:24px;height:24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path fill="currentColor" d="${icon}" />
+    </svg>`;
 }
 
-/**
- * Creates a fully configured icon button.
- *
- * This is the recommended API for generating toolbar controls,
- * side-pane buttons, or action buttons anywhere in the plugin.
- */
-export function createIconButton(
-	parent: HTMLElement,
-	icon: MFAIconName,
-	{
-		cls = "mfa-icon-button",
-		size = DEFAULT_ICON_SIZE,
-		tooltip,
-		onClick,
-	}: {
-		cls?: string;
-		size?: number;
-		tooltip?: string;
-		onClick?: (evt: MouseEvent) => void;
-	} = {}
-): HTMLButtonElement {
-	const button = parent.createEl("button", { cls });
-
-	applyIcon(button, icon, size);
-
-	if (tooltip) {
-		button.setAttribute("aria-label", tooltip);
-		button.setAttribute("title", tooltip);
-	}
-
-	if (onClick) button.addEventListener("click", onClick);
-
-	return button;
+function importIconPaths() {
+  let res = {};
+  console.log(iconPaths);
+  R.forEachObjIndexed((value, key, obj) => {
+    // @ts-ignore
+    res = R.mergeLeft(res, R.map(pathToSvg, value));
+  }, iconPaths);
+  return res;
 }
+
+export const icons: Record<string, string> = {
+  ...importIconPaths(),
+
+  division: pathToSvg(mdiIcons.mdiDivision),
+  multiplication: pathToSvg(mdiIcons.mdiCircleSmall),
+
+  h1: pathToSvg(mdiIcons.mdiFormatHeader1),
+  h2: pathToSvg(mdiIcons.mdiFormatHeader2),
+  h3: pathToSvg(mdiIcons.mdiFormatHeader3),
+  h4: pathToSvg(mdiIcons.mdiFormatHeader4),
+  h5: pathToSvg(mdiIcons.mdiFormatHeader5),
+  h6: pathToSvg(mdiIcons.mdiFormatHeader6),
+  bold: pathToSvg(mdiIcons.mdiFormatBold),
+  italic: pathToSvg(mdiIcons.mdiFormatItalic),
+  strikethrough: pathToSvg(mdiIcons.mdiFormatStrikethroughVariant),
+  codeInline: pathToSvg(mdiIcons.mdiCodeTags),
+  codeBlock: pathToSvg(mdiIcons.mdiXml),
+  link: pathToSvg(mdiIcons.mdiLinkVariant),
+  mermaidBlock: pathToSvg(mdiIcons.mdiGraph),
+  fileLink: pathToSvg(mdiIcons.mdiFileLink),
+  image: pathToSvg(mdiIcons.mdiImage),
+  quote: pathToSvg(mdiIcons.mdiFormatIndentIncrease),
+  bulletList: pathToSvg(mdiIcons.mdiFormatListBulleted),
+  numberList: pathToSvg(mdiIcons.mdiFormatListNumbered),
+  checkList: pathToSvg(mdiIcons.mdiFormatListBulletedSquare),
+  viewIcon: pathToSvg(mdiIcons.mdiLanguageMarkdown),
+  underline: pathToSvg(mdiIcons.mdiFormatUnderline),
+  menu: pathToSvg(mdiIcons.mdiMenu),
+  expandArrowDown: pathToSvg(mdiIcons.mdiChevronDown),
+  expandArrowUp: pathToSvg(mdiIcons.mdiChevronUp),
+  highlight: pathToSvg(mdiIcons.mdiMarker),
+};
+
+export const addIcons = (): void => {
+  Object.keys(icons).forEach((key) => {
+    addIcon(key, icons[key]);
+  });
+};
+
+/**
+ * Convert an svg string into an HTML element.
+ *
+ * @param svgText svg image as a string
+ */
+export const svgToElement = (key: string | number): HTMLElement => {
+  if (key.toString().contains('.svg')) {
+    const img = document.createElement('img');
+    img.src = key.toString();
+    img.style.width = '24px';
+    img.style.height = '24px';
+
+    return img;
+  } else {
+    const parser = new DOMParser();
+    return parser.parseFromString(icons[key], 'text/xml').documentElement;
+  }
+};
